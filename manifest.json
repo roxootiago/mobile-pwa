@@ -10,14 +10,14 @@
   "theme_color": "#ffffff",
   "icons": [
     {
-      "src": "assets/img/icone.png",
+      "src":"assets/img/android/android-launchericon-48-48.png",
       "type": "image/png",
-      "sizes": "220x220"
+      "sizes": "48x48"
     },
     {
-      "src": "assets/img/apple-touch-icon.png",
+      "src": "assets/img/android/android-launchericon-192-192.png",
       "type": "image/png",
-      "sizes": "180x180"
+      "sizes": "192x192"
     }
   ],
   "description": "Encontre vagas de estágio exclusivas para alunos da Faculdade Senac e tenha consultoria e monitoria do setor de empregabilidade",
