@@ -1,0 +1,29 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "mobile-pwa.netlify",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "mobile-pwa.netlify",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "assets/img/favicon.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "assets/img/apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    }
+  ],
+  "description": "Encontre vagas de estágio exclusivas para alunos da Faculdade Senac e tenha consultoria e monitoria do setor de empregabilidade",
+  "lang": "pt",
+  "categories": [
+    "books",
+    "education"
+  ]
+}
