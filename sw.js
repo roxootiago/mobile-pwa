@@ -1,37 +1,47 @@
-const CACHE_NAME = "cool-cache";
+  var cacheName = "pwaTeste+-v1.0";
 
-// Add whichever assets you want to pre-cache here:
-const PRECACHE_ASSETS = "./offline.html"
+  self.addEventListener("install", (event) => {
+    self.skipWaiting();
 
-// Listener for the install event - pre-caches our assets list on service worker install.
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    (async () => {
-      const cache = await caches.open(CACHE_NAME);
-      cache.addAll(PRECACHE_ASSETS);
-    })()
-  );
-});
+    event.waitUntil(
+      caches
+        .open(cacheName)
+        .then((cache) =>
+          cache.addAll([
+            "./offline.html",
 
-self.addEventListener("activate", (event) => {
-  event.waitUntil(self.clients.claim());
-});
+            "./assets/",
+          ])
+        )
+    );
+  });
 
-
-self.addEventListener("fetch", (event) => {
-  event.respondWith(async () => {
-    const cache = await caches.open(CACHE_NAME);
-
-    // match the request to our cache
-    const cachedResponse = await cache.match(event.request);
-
-    // check if we got a valid response
-    if (cachedResponse !== undefined) {
-      // Cache hit, return the resource
-      return cachedResponse;
-    } else {
-      // Otherwise, go to the network
-      return fetch(event.request);
+  self.addEventListener("message", function (event) {
+    if (event.data.action === "skipWaiting") {
+      self.skipWaiting();
     }
   });
-});
+
+  self.addEventListener("fetch", function (event) {
+    //Atualizacao internet
+    event.respondWith(
+      (async function () {
+        try {
+          return await fetch(event.request);
+        } catch (err) {
+          return caches.match(event.request);
+        }
+      })()
+    );
+
+    //Atualizacao cache
+    /*event.respondWith(
+    caches.match(event.request)
+      .then(function (response) {
+        if (response) {
+          return response;
+        }
+        return fetch(event.request);
+      })
+  );*/
+  });
