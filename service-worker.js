@@ -8,11 +8,11 @@ const CACHE = "pwabuilder-page";
 const offlineFallbackPage = [
   "./offline.html",
   "./assets/css/main.css",
-  "assets/vendor/bootstrap/css/bootstrap.min.css",
-  "assets/vendor/bootstrap-icons/bootstrap-icons.css",
-  "assets/vendor/aos/aos.css",
-  "assets/vendor/glightbox/css/glightbox.min.css",
-  "assets/vendor/swiper/swiper-bundle.min.css",
+  "./assets/vendor/bootstrap/css/bootstrap.min.css",
+  "./assets/vendor/bootstrap-icons/bootstrap-icons.css",
+  "./assets/vendor/aos/aos.css",
+  "./assets/vendor/glightbox/css/glightbox.min.css",
+  "./assets/vendor/swiper/swiper-bundle.min.css",
 ];
 
 
