@@ -8,7 +8,9 @@ const CACHE = "pwabuilder-page";
 const offlineFallbackPage = [
   "./offline.html",
   "./assets/css/main.css",
-  "./assets/vendor/bootstrap/bootstrap.min.css",
+  "./assets/vendor/bootstrap/css/bootstrap.min.css",
+  "./assets/js/main.js",
+  "./assets/vendor/bootstrap/js/bootstrap.min.js"
 ];
 
 
