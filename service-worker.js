@@ -1,68 +1,68 @@
+const CACHE_NAME = "my-cache-v1";
+const urlsToCache = [
+  "/",
+  "./offline.html",
+  "./assets/css/main.css",
+  "assets/vendor/bootstrap/css/bootstrap.min.css",
+  "assets/vendor/bootstrap-icons/bootstrap-icons.css",
+  "assets/vendor/aos/aos.css",
+  "assets/vendor/glightbox/css/glightbox.min.css",
+  "assets/vendor/swiper/swiper-bundle.min.css",
+  // Adicione mais URLs de recursos que você deseja armazenar em cache aqui
+];
 
+self.addEventListener("install", function (event) {
+  // Perform installation steps
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(function (cache) {
+      console.log("Opened cache");
+      return cache.addAll(urlsToCache);
+    })
+  );
+});
 
-self.addEventListener("fetch", (event) => {
-  if (event.request.mode === "navigate") {
-    event.respondWith(
-      (async () => {
-        try {
-          const preloadResp = await event.preloadResponse;
+self.addEventListener("fetch", function (event) {
+  event.respondWith(
+    caches.match(event.request).then(function (response) {
+      // Cache hit - return response
+      if (response) {
+        return response;
+      }
 
-          if (preloadResp) {
-            return preloadResp;
-          }
+      // Clone the request because it's a one-time use
+      var fetchRequest = event.request.clone();
 
-          const networkResp = await fetch(event.request);
-          return networkResp;
-        } catch (error) {
-          const cache = await caches.open(CACHE);
-
-          // Tente corresponder individualmente a cada recurso CSS
-          const cachedMainCss = await cache.match("./assets/css/main.css");
-          const cachedBootstrapCss = await cache.match(
-            "./assets/vendor/bootstrap/css/bootstrap.min.css"
-          );
-          const cachedBootstrapIconsCss = await cache.match(
-            "./assets/vendor/bootstrap-icons/bootstrap-icons.css"
-          );
-          const cachedAosCss = await cache.match("./assets/vendor/aos/aos.css");
-          const cachedGlightboxCss = await cache.match(
-            "./assets/vendor/glightbox/css/glightbox.min.css"
-          );
-          const cachedSwiperCss = await cache.match(
-            "./assets/vendor/swiper/swiper-bundle.min.css"
-          );
-
-          // Retorna o recurso CSS do cache, se disponível
-          if (
-            cachedMainCss &&
-            cachedBootstrapCss &&
-            cachedBootstrapIconsCss &&
-            cachedAosCss &&
-            cachedGlightboxCss &&
-            cachedSwiperCss
-          ) {
-            return new Response(
-              new Blob([
-                cachedMainCss.body,
-                cachedBootstrapCss.body,
-                cachedBootstrapIconsCss.body,
-                cachedAosCss.body,
-                cachedGlightboxCss.body,
-                cachedSwiperCss.body,
-              ]),
-              {
-                headers: {
-                  "Content-Type": "text/css",
-                },
-              }
-            );
-          }
-
-          // Se nenhum recurso CSS for encontrado no cache, retorne offline.html
-          const cachedResp = await cache.match("./offline.html");
-          return cachedResp;
+      return fetch(fetchRequest).then(function (response) {
+        // Check if we received a valid response
+        if (!response || response.status !== 200 || response.type !== "basic") {
+          return response;
         }
-      })()
-    );
-  }
+
+        // Clone the response because it's a one-time use
+        var responseToCache = response.clone();
+
+        caches.open(CACHE_NAME).then(function (cache) {
+          cache.put(event.request, responseToCache);
+        });
+
+        return response;
+      });
+    })
+  );
+});
+
+self.addEventListener("activate", function (event) {
+  var cacheWhitelist = ["pages-cache-v1", "blog-posts-cache-v1"];
+
+  event.waitUntil(
+    caches.keys().then(function (cacheNames) {
+      return Promise.all(
+        cacheNames.map(function (cacheName) {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
 });
