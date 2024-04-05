@@ -9,8 +9,7 @@
         .then((cache) =>
           cache.addAll([
             "./offline.html",
-
-            "./assets/",
+           
           ])
         )
     );
