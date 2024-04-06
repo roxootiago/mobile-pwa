@@ -2,10 +2,10 @@
   "background_color": "#ffffff",
   "dir": "ltr",
   "display": "standalone",
-  "name": "mobile-pwa.netlify",
+  "name": "Estágio Senac",
   "orientation": "any",
   "scope": "/",
-  "short_name": "mobile-pwa.netlify",
+  "short_name": "Estágio Senac",
   "start_url": "/",
   "theme_color": "#ffffff",
   "icons": [
