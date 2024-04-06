@@ -7,7 +7,7 @@ importScripts(
 const CACHE = "pwabuilder-page";
 
 // TODO: replace the following with the correct offline fallback page i.e.: const offlineFallbackPage = "offline.html";
-const offlineFallbackPage = ["./offline.html", "./assets/img/OIG4.jpg"];
+const offlineFallbackPage = ["./assets/img/OIG4.jpg", "./offline.html"];
 
 self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") {
